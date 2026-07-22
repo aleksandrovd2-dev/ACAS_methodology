@@ -102,3 +102,6 @@ Implementation over 6 months revealed that 21% of the customer base had been gen
 1.  **Why do newbies get a head start?** To prevent a "cold start" penalty during the initial 30-90 day onboarding period. The smoothing function grants them a temporary trust credit. As the customer ages, the math fully switches to the hard facts of their activity.
 2.  **Why calculate amounts and quantities independently?** To prevent a scenario where a single large payment masks hundreds of unpaid small invoices that paralyze backend operations. Both metrics must be disciplined to maintain priority.
 3.  **What if a strategic VIP is blocked?** The architecture mandates a "Whitelisting" mechanism at the CRM level. Strategic partners are excluded to protect them from automatic restrictions, leaving ACAS as a fair judge for the remaining 95% of the base.
+
+## Live Demo (API Microservice):
+**Test ACAS Methodology API here:** https://acas-methodology.onrender.com/docs
