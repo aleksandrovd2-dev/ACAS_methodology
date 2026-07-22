@@ -5,6 +5,12 @@ app = FastAPI(
     title="ACAS Methodology API",
     description="Микросервис для расчета рейтинга клиентов по методологии ACAS",
     version="1.0.0"
+
+    @app.get("/")
+def read_root():
+    return {
+        "message": "Добро пожаловать в ACAS API. Перейдите на /docs для тестирования расчетной модели."
+    }
 )
 
 # Форма для входящих данных клиента
