@@ -3,72 +3,72 @@ from pydantic import BaseModel, Field
 
 app = FastAPI(
     title="ACAS Methodology API",
-    description="Microservice for calculating customer activity ratings based on the ACAS (Aleksandrov Customer Activity Scoring) methodology.",
+    description="Микросервис для расчета рейтинга активности клиентов по методологии ACAS (Aleksandrov Customer Activity Scoring).",
     version="1.0.0"
 )
 
-# Input data model with descriptions for the Swagger UI
-class customerMetrics(BaseModel):
-    vi: float = Field(..., description="Volume of Invoices (Number of invoices issued)")
-    vp: float = Field(..., description="Volume of Paid (Number of invoices paid)")
-    vr: float = Field(..., description="Volume of Refunds (Number of refunds)")
-    ai: float = Field(..., description="Amount Invoiced (Total sum of invoices)")
-    ap: float = Field(..., description="Amount Paid (Total sum paid)")
-    ar: float = Field(..., description="Amount Refunded (Total sum refunded)")
-    pa: float = Field(..., description="Period of Activity (in months)")
-    pl: float = Field(..., description="Period of Life (in months)")
+# Модель входящих данных с русскоязычными описаниями для Swagger UI
+class ClientMetrics(BaseModel):
+    vi: float = Field(..., description="Количество выставленных счетов (VI)")
+    vp: float = Field(..., description="Количество оплаченных счетов (VP)")
+    vr: float = Field(..., description="Количество возвратов (VR)")
+    ai: float = Field(..., description="Общая сумма выставленных счетов (AI)")
+    ap: float = Field(..., description="Общая сумма оплат (AP)")
+    ar: float = Field(..., description="Общая сумма возвратов (AR)")
+    pa: float = Field(..., description="Период активности клиента в месяцах (PA)")
+    pl: float = Field(..., description="Период жизни клиента в месяцах (PL)")
 
-# Route to handle the root URL (fixes the 404 error)
+# Обработчик корневого адреса (устраняет ошибку 404 и приветствует пользователя)
 @app.get("/")
 def read_root():
     return {
-        "message": "Welcome to the ACAS Scoring API. Please append '/docs' to the URL to access the interactive testing interface."
+        "сообщение": "Добро пожаловать в ACAS Scoring API. Добавьте '/docs' в конец URL-адреса, чтобы открыть интерактивный интерфейс тестирования."
     }
 
-# Main route for calculating the ACAS rating
+# Основной метод для расчета рейтинга ACAS
 @app.post("/calculate-acas/")
-def calculate_acas(metrics: customerMetrics):
-    # Model constants
+def calculate_acas(metrics: ClientMetrics):
+    # Константы модели
     R1, PM, K = 0.5, 3.0, 2.0
     
-    # 1. Protection against division by zero and calculation of Weighted Efficiency (WE)
+    # 1. Защита от деления на ноль и расчет Взвешенной эффективности (WE)
     if metrics.vi == 0 or metrics.ai == 0:
         we = 0.0
     else:
         we = max(0.0, min(1.0, 0.5 * (((metrics.vp - metrics.vr) / metrics.vi) + ((metrics.ap - metrics.ar) / metrics.ai))))
         
-    # 2. Calculation of Activity Gap (AG) and Zero Pressure (ZP)
+    # 2. Расчет Коэффициента потери активности (AG) и Нулевого давления (ZP)
     ag = max(0.0, 1.0 - (metrics.pa / metrics.pl))
     zp = max(0.0, (metrics.vi - metrics.vp + metrics.vr) / metrics.pa)
     
-    # 3. Waste Index (WI) and Hard Rating (R2)
+    # 3. Индекс потерь (WI) и Жесткий рейтинг (R2)
     wi = 0.5 * (ag + zp)
     r2 = we * max(0.0, 1.0 - wi)
     
-    # 4. Lifecycle Smoothing (w_pl) and final ACAS Score
+    # 4. Динамическое сглаживание (w_pl) и итоговый балл ACAS
     w_pl = 1.0 / (1.0 + (metrics.pl / PM) ** K)
     acas_score = (w_pl * R1 + (1.0 - w_pl) * r2) * 100
     
-    # 5. Status Matrix assignment based on business rules
+    # 5. Присвоение статуса на основе матрицы бизнес-правил
     if acas_score < 0.0:
-        status = "Critical"
+        status = "Критический"
     elif acas_score <= 0.99:
-        status = "Zero"
+        status = "Нулевой"
     elif acas_score <= 5.0:
-        status = "Very Low"
+        status = "Очень низкий"
     elif acas_score <= 25.0:
-        status = "Low"
+        status = "Низкий"
     elif acas_score <= 65.0:
-        status = "Medium"
+        status = "Средний"
     elif acas_score <= 95.0:
-        status = "High"
+        status = "Высокий"
     else:
-        status = "Very High"
+        status = "Очень высокий"
 
-    # API Response
+    # Ответ микросервиса (на русском языке)
     return {
-        "Weighted_Efficiency_WE": round(we, 2),
-        "Waste_Index_WI": round(wi, 2),
-        "ACAS_Score_Percent": round(acas_score, 2),
-        "Status": status
+        "Взвешенная_эффективность_WE": round(we, 2),
+        "Индекс_потерь_WI": round(wi, 2),
+        "Рейтинг_ACAS_Процент": round(acas_score, 2),
+        "Статус": status
     }
