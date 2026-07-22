@@ -3,12 +3,12 @@ from pydantic import BaseModel, Field
 
 app = FastAPI(
     title="ACAS Methodology API",
-    description="Microservice for calculating client activity ratings based on the ACAS (Aleksandrov Customer Activity Scoring) methodology.",
+    description="Microservice for calculating customer activity ratings based on the ACAS (Aleksandrov Customer Activity Scoring) methodology.",
     version="1.0.0"
 )
 
 # Input data model with descriptions for the Swagger UI
-class ClientMetrics(BaseModel):
+class customerMetrics(BaseModel):
     vi: float = Field(..., description="Volume of Invoices (Number of invoices issued)")
     vp: float = Field(..., description="Volume of Paid (Number of invoices paid)")
     vr: float = Field(..., description="Volume of Refunds (Number of refunds)")
@@ -27,7 +27,7 @@ def read_root():
 
 # Main route for calculating the ACAS rating
 @app.post("/calculate-acas/")
-def calculate_acas(metrics: ClientMetrics):
+def calculate_acas(metrics: customerMetrics):
     # Model constants
     R1, PM, K = 0.5, 3.0, 2.0
     
