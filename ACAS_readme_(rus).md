@@ -103,4 +103,4 @@
 3.  **Защита VIP-клиентов:** Стратегические партнеры вносятся в «Белые списки» (Whitelisting) в CRM для защиты от автоматических ограничений.
 
 ## Демо (API Микросервис):
-**Тестовый API Методологии ACAS здесь:** https://acas-methodology.onrender.com/docs
+**Тестовый API Методологии ACAS здесь:** [https://acas-metodologiia.onrender.com/docs]
