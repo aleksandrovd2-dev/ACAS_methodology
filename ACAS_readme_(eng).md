@@ -69,7 +69,7 @@ customers with a low ACAS rating are removed from the sales department and trans
 *   **WI:** 0.5 * (0.3333 + 0.1) = 0.2167.
 *   **R2:** 0.95 * (1 - 0.2167) = 0.7441.
 *   **w(1.5):** 1 / (1 + (1.5/3)^2) = 0.8.
-*   **R_acas:** 0.8 * 0.5 + (1 - 0.8) * 0.7441 = 54.88% (Status: Medium).
+*   **Acas:** 0.8 * 0.5 + (1 - 0.8) * 0.7441 = 54.88% (Status: Medium).
 
 **customer 2: Old "Time Burner" (Passive customer)**
 *   **Inputs:** PL = 12, PA = 2, VI = 50, AI = 1.0, VP = 2, AP = 0.2.
@@ -79,7 +79,7 @@ customers with a low ACAS rating are removed from the sales department and trans
 *   **WI:** 0.5 * (0.8333 + 0.4) = 0.6167.
 *   **R2:** 0.12 * (1 - 0.6167) = 0.0460.
 *   **w(12):** 1 / (1 + (12/3)^2) = 0.0588.
-*   **R_acas:** 0.0588 * 0.5 + (1 - 0.0588) * 0.0460 = 7.27% (Status: Low).
+*   **Acas:** 0.0588 * 0.5 + (1 - 0.0588) * 0.0460 = 7.27% (Status: Low).
 
 **customer 3: Reliable Partner**
 *   **Inputs:** PL = 6, PA = 6, VI = 12, AI = 1.0, VP = 12, AP = 1.0.
@@ -89,7 +89,7 @@ customers with a low ACAS rating are removed from the sales department and trans
 *   **WI:** 0.
 *   **R2:** 1.0.
 *   **w(6):** 0.2.
-*   **R_acas:** 0.2 * 0.5 + (1 - 0.2) * 1.0 = 90.0% (Status: High).
+*   **Acas:** 0.2 * 0.5 + (1 - 0.2) * 1.0 = 90.0% (Status: High).
 
 ## Business Impact: Results in Company "N"
 Implementation over 6 months revealed that 21% of the customer base had been generating invoices totaling over 1 billion rubles for years with zero final payments.
