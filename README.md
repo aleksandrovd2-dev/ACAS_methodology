@@ -1,4 +1,4 @@
-🇷🇺 **Russian Version:** [Читать документацию на русском языке](README.ru.md)
+**Russian Version:** [Читать документацию на русском языке](README.ru.md)
 
 ---
 
