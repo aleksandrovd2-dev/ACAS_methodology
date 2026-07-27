@@ -1,4 +1,4 @@
-🇬🇧 **English Version:** [Read documentation in English](README.md)
+**English Version:** [Read documentation in English](README.md)
 
 ---
 # Методология ACAS (Aleksandrov Customer Activity Scoring)
